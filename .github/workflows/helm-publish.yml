@@ -1,12 +1,25 @@
-name: Release Chart
+name: Release Charts
+
 on:
   push:
     branches:
       - main
-    paths:
-      - "helm/**"
-      - ".github/workflows/helm-publish.yml"
+
 jobs:
-  Release:
-    name: 'Helm'
-    uses: curium-rocks/flows/.github/workflows/helm-release.yml@main
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Configure Git
+        run: |
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+
+      - name: Run chart-releaser
+        uses: helm/chart-releaser-action@v1.5.0
+        env:
+          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
