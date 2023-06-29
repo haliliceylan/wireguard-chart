@@ -15,7 +15,7 @@ metadata:
     "helm.sh/hook": pre-install
     "helm.sh/hook-weight": "0"
     "helm.sh/resource-policy": delete
-    "helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded"
+    "helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded,hook-failed"
 rules:
 - apiGroups: [""]
   resources: ["secrets"]
